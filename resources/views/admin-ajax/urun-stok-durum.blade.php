@@ -1,0 +1,1 @@
+{{urun_stok_durum(get("id"))}}

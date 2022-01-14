@@ -1,0 +1,1 @@
+<?php echo e(urun_stok_durum(get("id"))); ?><?php /**PATH /home/truncgil/happyworks.truncgil.link/resources/views/admin-ajax/urun-stok-durum.blade.php ENDPATH**/ ?>

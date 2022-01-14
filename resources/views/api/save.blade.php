@@ -1,0 +1,1 @@
+<?php print2($_POST); ?>
