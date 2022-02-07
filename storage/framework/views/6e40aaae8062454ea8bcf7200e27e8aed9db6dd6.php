@@ -10,6 +10,18 @@ if(getisset("ekle")) {
 	
 } 
 $urunler = db("contents")->where("type","Ürünler");
+if(getisset("urunler-keywords-guncelle")) {
+	
+	$urunler2 = $urunler->get();
+	foreach($urunler2 AS $u2) {
+		db("contents")
+		->where("id",$u2->id)
+		->update([
+			"slug" => str_slug("{$u2->title} {$u2->title2} {$u2->renk} {$u2->grup}")
+		]);
+	}
+}
+
 $m = 10;
 if(oturumisset("m")) {
 	$m = oturum("m");
@@ -20,15 +32,25 @@ if(getisset("m")) {
 }
 
 if(!getesit("q","")) {
-	$q = get("q");
-	$urunler = $urunler->where(function($query) use($q) {
-		$query = $query->orWhere("id",$q);	
-		$query = $query->orWhere("title","like","%$q%");	
-		$query = $query->orWhere("sku","like","%$q%");	
-		$query = $query->orWhere("kat_sku","like","%$q%");	
-		$query = $query->orWhere("renk","like","%$q%");	
-		$query = $query->orWhere("grup","like","%$q%");	
-	});
+	$qs = explode(" ",get("q"));
+	foreach($qs AS $q) {
+		$urunler = $urunler->where(function($query) use($q) {
+			$slug = str_slug($q,"");
+			$query = $query->orWhere("id",$q);	
+			$query = $query->orWhere("title","like","%$q%");	
+			$query = $query->orWhere("title2","like","%$q%");	
+			$query = $query->orWhere("sku","like","%$q%");	
+			$query = $query->orWhere("kat_sku","like","%$q%");	
+			$query = $query->orWhere("renk","like","%$q%");	
+			$query = $query->orWhere("grup","like","%$q%");	
+			$query = $query->orWhere("title","like","%$slug%");	
+			$query = $query->orWhere("slug","like","%$slug%");	
+			$query = $query->orWhere("title2","like","%$slug%");	
+			$query = $query->orWhere("grup","like","%$slug%");	
+			$query = $query->orWhere("renk","like","%$slug%");	
+		});
+	}
+	
 }
 if(!getesit("title2","")) {
 	$urunler = $urunler->where("title2",get("title2"));
@@ -122,6 +144,9 @@ $stok_cikis_sayim = stok_cikis_sayim();
 			<h3 class="block-title"><i class="fa fa-<?php echo e($c->icon); ?>"></i> <?php echo e(e2($c->title)); ?> <?php echo e(__('Listesi')); ?></h3>
 			<div class="block-options">
 				<div class="block-options-item"> 
+				<button onclick="var bu = $(this); bu.html('İşlem yapılıyor...');$.get('?urunler-keywords-guncelle',function(){
+					bu.html('İşlem tamamlandı.');
+				});" title="<?php echo e(e2("Eğer bir ürün aramada zorluk yaşıyorsanız bu işlemi yapınız")); ?>" target="_blank" class="btn btn-warning"><i class="fa fa-search"></i> <?php echo e(e2("Aramayı İyileştir")); ?></button>	
 				<a href="?ajax=print-barkodlar" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> <?php echo e(e2("Tüm Ürün Barkodlarını Yazdır")); ?></a>	
 				<a
 						href="<?php echo e(url('admin-ajax/content-type-blank-delete?type='. $c->title)); ?>"

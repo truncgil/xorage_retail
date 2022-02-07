@@ -20,7 +20,7 @@ $users = usersArray();
                             <select name="urun" id="" class="form-control select2">
                                 <option value=""><?php echo e(e2("TÜMÜ")); ?></option>
                                 <?php $sorgu = contents_to_array("Ürünler"); foreach($sorgu AS $m) { ?>
-                                <option value="<?php echo e($m->id); ?>"><?php echo e($m->title); ?> <?php echo e($m->renk); ?></option>
+                                <option value="<?php echo e($m->id); ?>"><?php echo e($m->title); ?> <?php echo e($m->renk); ?> </option>
                                 <?php } ?>
                             </select>
                         </div>

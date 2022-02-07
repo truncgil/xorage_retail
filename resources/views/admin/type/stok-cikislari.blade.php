@@ -19,7 +19,7 @@ $users = usersArray();
                             <select name="urun" id="" class="form-control select2">
                                 <option value="">{{e2("TÜMÜ")}}</option>
                                 <?php $sorgu = contents_to_array("Ürünler"); foreach($sorgu AS $m) { ?>
-                                <option value="{{$m->id}}">{{$m->title}} {{$m->renk}}</option>
+                                <option value="{{$m->id}}">{{$m->title}} {{$m->renk}} </option>
                                 <?php } ?>
                             </select>
                         </div>

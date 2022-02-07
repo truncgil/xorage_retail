@@ -44,7 +44,10 @@ $users = usersArray();
                     <select name="type" required class="form-control select2 urun-sec" required id="">
                             <option value="">Seçiniz</option>
                         <?php foreach($urunler AS $u) { ?>
-                            <option value="{{$u->id}}">{{$u->id}} {{$u->title}} {{$u->renk}} / {{$u->title2}} / {{$u->grup}} </option>
+                            <option value="{{$u->id}}">{{$u->id}} {{$u->title}} {{$u->renk}} / {{$u->title2}} / {{$u->grup}} 
+
+                            {{str_slug($urun->slug," ")}}
+                            </option>
                         <?php } ?>
                     </select>
                     

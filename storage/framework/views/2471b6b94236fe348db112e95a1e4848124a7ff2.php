@@ -244,7 +244,6 @@ if(oturumisset("kaydet")) {
             <?php echo e(e2("Sipariş Numarası")); ?>
 
             <input type="text" required name="siparis_numarasi" id="siparis_numarasi" class="form-control">
-            
         </div>
         <div class="col-md-5">
             <?php echo e(e2("Sipariş Ürün Grubu Adı")); ?>
@@ -281,11 +280,13 @@ if(oturumisset("kaydet")) {
                       ?>
                      <tr>
                          <td>
-                             <select name="urun[]" required data-id="<?php echo e($k); ?>" class="select2 urun-sec">
+                             <select name="urun[]"  style="width:200px;max-width:200px;" required data-id="<?php echo e($k); ?>" class="select2 urun-sec">
                                  <option value=""><?php echo e(e2("Seçiniz")); ?></option>
                                  <?php foreach($urunler AS $urun)  { 
                                   ?>
-                                  <option value="<?php echo e($urun->id); ?>"><?php echo e($urun->title); ?> <?php echo e($urun->renk); ?></option> 
+                                  <option value="<?php echo e($urun->id); ?>"><?php echo e($urun->title); ?> <?php echo e($urun->renk); ?> 
+                                     
+                                  </option> 
                                   <?php } ?>
                              </select>
                          </td>

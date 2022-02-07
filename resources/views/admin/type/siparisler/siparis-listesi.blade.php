@@ -29,7 +29,8 @@
                             <select name="urun2" id="" class="form-control select2">
                                 <option value="">{{e2("TÜMÜ")}}</option>
                                 <?php $sorgu = contents_to_array("Ürünler"); foreach($sorgu AS $m) { ?>
-                                <option value="{{$m->id}}" <?php if(getesit("urun2",$m->id)) echo "selected"; ?>>{{$m->title}} {{$m->renk}}</option>
+                                <option value="{{$m->id}}" <?php if(getesit("urun2",$m->id)) echo "selected"; ?>>
+                                {{$m->title}} {{$m->renk}}  {{str_slug($m->slug," ")}}</option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -258,6 +259,9 @@
              <?php } ?>
         </table>
     </div>
-    
-    {{$siparisler->appends($_GET)->links()}}
+    <?php $get = $_GET;
+    unset($get['siparis-ekle']);
+    unset($get['siparis-sil']);
+    ?>
+    {{$siparisler->appends($get)->links()}}
 {{_col()}}

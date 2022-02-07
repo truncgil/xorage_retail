@@ -238,7 +238,6 @@ if(oturumisset("kaydet")) {
         <div class="col-md-2">
             {{e2("Sipariş Numarası")}}
             <input type="text" required name="siparis_numarasi" id="siparis_numarasi" class="form-control">
-            
         </div>
         <div class="col-md-5">
             {{e2("Sipariş Ürün Grubu Adı")}}
@@ -273,11 +272,13 @@ if(oturumisset("kaydet")) {
                       ?>
                      <tr>
                          <td>
-                             <select name="urun[]" required data-id="{{$k}}" class="select2 urun-sec">
+                             <select name="urun[]"  style="width:200px;max-width:200px;" required data-id="{{$k}}" class="select2 urun-sec">
                                  <option value="">{{e2("Seçiniz")}}</option>
                                  <?php foreach($urunler AS $urun)  { 
                                   ?>
-                                  <option value="{{$urun->id}}">{{$urun->title}} {{$urun->renk}}</option> 
+                                  <option value="{{$urun->id}}">{{$urun->title}} {{$urun->renk}} 
+                                     
+                                  </option> 
                                   <?php } ?>
                              </select>
                          </td>

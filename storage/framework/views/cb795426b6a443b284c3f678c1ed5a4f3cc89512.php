@@ -30,7 +30,8 @@
                             <select name="urun2" id="" class="form-control select2">
                                 <option value=""><?php echo e(e2("TÜMÜ")); ?></option>
                                 <?php $sorgu = contents_to_array("Ürünler"); foreach($sorgu AS $m) { ?>
-                                <option value="<?php echo e($m->id); ?>" <?php if(getesit("urun2",$m->id)) echo "selected"; ?>><?php echo e($m->title); ?> <?php echo e($m->renk); ?></option>
+                                <option value="<?php echo e($m->id); ?>" <?php if(getesit("urun2",$m->id)) echo "selected"; ?>>
+                                <?php echo e($m->title); ?> <?php echo e($m->renk); ?>  <?php echo e(str_slug($m->slug," ")); ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -262,7 +263,10 @@
              <?php } ?>
         </table>
     </div>
-    
-    <?php echo e($siparisler->appends($_GET)->links()); ?>
+    <?php $get = $_GET;
+    unset($get['siparis-ekle']);
+    unset($get['siparis-sil']);
+    ?>
+    <?php echo e($siparisler->appends($get)->links()); ?>
 
 <?php echo e(_col()); ?><?php /**PATH /home/truncgil/happyworks.truncgil.link/resources/views/admin/type/siparisler/siparis-listesi.blade.php ENDPATH**/ ?>

@@ -475,14 +475,60 @@ $("#modal-popin .modal-dialog").removeClass("modal-lg");
 	  
 
   });
+  slugify = function(text) {
+    var trMap = {
+        'çÇ':'c',
+        'ğĞ':'g',
+        'şŞ':'s',
+        'üÜ':'u',
+        'ıİ':'i',
+        'öÖ':'o'
+    };
+    for(var key in trMap) {
+        text = text.replace(new RegExp('['+key+']','g'), trMap[key]);
+    }
+    return  text.replace(/[^-a-zA-Z0-9\s]+/ig, '') // remove non-alphanumeric chars
+                .replace(/\s/gi, "-") // convert spaces to dashes
+                .replace(/[-]+/gi, "-") // trim repeated dashes
+                .toLowerCase();
 
+}
   $(".tags").tagsInput();
+  function matcher(params, data) {
+  // If there are no search terms, return all of the data
+  if ($.trim(params.term) === '') {
+    return data;
+  }
 
-  $(".select2").select2({
+  // Do not display the item if there is no 'text' property
+  if (typeof data.text === 'undefined') {
+    return null;
+  }
 
+  var words = params.term.split(" ");
+  
+  for (var i = 0; i < words.length; i++) {
+	  var slug_text = slugify(data.text);
+	  var slug_param = slugify(words[i]);
+    if (slug_text.indexOf(slug_param) < 0) {
+	//	console.log("ok");
+      return null;
+    }
+  }
+
+  return data;
+}
+$(".select2").on("mouseover",function(e){
+//	e.stopPropagation();
+	$(this).select2({
+  	  language: "tr",
+	  matcher: matcher,
 	  tags: true
 
   });
+ // return false;
+});
+  
 
 /*
 

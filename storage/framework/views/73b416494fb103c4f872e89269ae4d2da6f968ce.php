@@ -8,26 +8,59 @@
 			$(document).ready(function(){
 			$("#ara").on("keyup", function() {
 				var value = $(this).val().toLowerCase();
-				$("#tablo tbody tr").filter(function() {
+				$("#excel tbody tr").filter(function() {
 				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 				});
 			});
 			$(".filtre-btn").on("click",function(){
-				var value = $(this).attr("data-id");
+				var value = $(this).attr("data-id")+"-"+$(".filter-select").val();
+				$("#ara").val(value);
+				/*
 				$("#tablo tbody tr").filter(function() {
-				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+				});
+				*/
+				$("#ara").trigger("keyup");
+
+			});
+			$(".filter-select").on("change",function(){
+				var value = $(this).val();
+				console.log(value);
+				$("#excel tbody tr").filter(function() {
+					$(this).toggle($(this).text().indexOf(value) > -1)
 				});
 
 			});
 			});
 			</script>
-			<input type="text" name="" placeholder="<?php echo e(e2("Ara...")); ?>" id="ara" class="form-control">
+			<?php $kategoriler = [];
+			foreach($urunler AS $u) {
+				if(!in_array($u->title2,$kategoriler)) {
+					array_push($kategoriler,$u->title2);
+				}
+				
+			}
+			?>
+			<div class="row">
+				<div class="col-6">
+					<input type="text" name="" placeholder="<?php echo e(e2("Ara...")); ?>" id="ara" class="form-control">
+				</div>
+				<div class="col-6">
+					<select name="" id="" class="form-control select2 filter-select">
+						<option value=""><?php echo e(e2("Tüm Kategoriler")); ?></option>
+						<?php foreach($kategoriler AS $k)  { 
+						?>
+							<option value="<?php echo e($k); ?>"><?php echo e($k); ?></option> 
+						<?php } ?>
+					</select>
+				</div>
+			</div>
             <div class="table-responsive">
 				<div class="btn btn-warning filtre-btn" data-id="warning"><?php echo e(e2("Kritik Stok")); ?></div>
 				<div class="btn btn-primary filtre-btn" data-id="primary"><?php echo e(e2("Yeterli Stok")); ?></div>
 				<div class="btn btn-danger filtre-btn" data-id="danger"><?php echo e(e2("Eksi Stok")); ?></div>
 				<div class="btn btn-success filtre-btn" data-id=""><?php echo e(e2("Tümü")); ?></div>
-                <table class="table table-bordered table-striped table-hover" id="tablo">
+                <table class="table table-bordered table-striped table-hover" id="excel">
 					<thead>
                     <tr>
                         <th><?php echo e(e2("ÜRÜN ADI")); ?></th>
@@ -63,9 +96,9 @@
                         <tr class="table-<?php echo e($durum); ?>">
                             <td><?php echo e($u->id); ?> <?php echo e($u->title); ?> <?php echo e($u->renk); ?>
 
-							<div class="d-none"><?php echo e(str_slug($u->title)); ?> <?php echo e(str_slug($u->renk)); ?></div>
+							<div class="d-none"><?php echo e(str_slug($u->title)); ?> <?php echo e(str_slug($u->title2)); ?> <?php echo e(str_slug($u->grup)); ?> <?php echo e(str_slug($u->renk)); ?> <?php echo e(($u->title2)); ?> <?php echo e($u->grup); ?></div>
 							
-							<div class="d-none"><?php echo e($durum); ?></div>
+							<div class="d-none"><?php echo e($durum); ?>-<?php echo e($u->title2); ?></div>
 
 							</td>
                             <td><?php echo e(nf($giris,$u->miktar_tur)); ?></td>

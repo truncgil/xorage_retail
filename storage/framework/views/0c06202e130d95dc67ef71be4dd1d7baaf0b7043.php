@@ -46,7 +46,7 @@ $users = usersArray();
                     <select name="type" required class="form-control select2 urun-sec" required id="">
                             <option value="">Seçiniz</option>
                         <?php foreach($urunler AS $u) { ?>
-                            <option value="<?php echo e($u->id); ?>"><?php echo e($u->id); ?> <?php echo e($u->title); ?> <?php echo e($u->renk); ?> / <?php echo e($u->title2); ?> / <?php echo e($u->grup); ?> </option>
+                            <option value="<?php echo e($u->id); ?>"><?php echo e($u->id); ?> <?php echo e($u->title); ?> <?php echo e($u->renk); ?> / <?php echo e($u->title2); ?> / <?php echo e($u->grup); ?>  </option>
                         <?php } ?>
                     </select>
                     
